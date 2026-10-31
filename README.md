@@ -29,6 +29,12 @@ Without Oracle environment variables, SQLite is used for local development. The 
 
 ## Oracle configuration
 
+Oracle support is optional. Install the Oracle driver before configuring Oracle:
+
+```powershell
+pip install "oracledb>=2.5,<3.0"
+```
+
 Configure Django and Flask to use the same Oracle database before starting:
 
 ```powershell
