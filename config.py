@@ -31,7 +31,15 @@ PAYMENT_METHODS = ["UPI", "Credit / Debit Card", "Net Banking", "Wallet"]
 
 class Config:
     SECRET_KEY = os.environ.get("CARECONNECT_SECRET_KEY", "careconnect360-dev-key-change-me")
-    SQLALCHEMY_DATABASE_URI = f"sqlite:///{BASE_DIR / 'careconnect360.db'}"
+    oracle_dsn = os.environ.get("ORACLE_DSN")
+    oracle_user = os.environ.get("ORACLE_USER")
+    oracle_password = os.environ.get("ORACLE_PASSWORD")
+    if oracle_dsn and oracle_user and oracle_password:
+        SQLALCHEMY_DATABASE_URI = (
+            f"oracle+oracledb://{oracle_user}:{oracle_password}@{oracle_dsn}"
+        )
+    else:
+        SQLALCHEMY_DATABASE_URI = f"sqlite:///{BASE_DIR / 'careconnect360.db'}"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     UPLOAD_FOLDER = BASE_DIR / "static" / "uploads"
     MAX_CONTENT_LENGTH = 5 * 1024 * 1024

@@ -1,6 +1,6 @@
 # CareConnect360: VirtualCare Telemedicine
 
-A full-stack telemedicine demo built with Python, Flask, SQLAlchemy and SQLite, with a Jinja2 and Bootstrap 5 front end.
+A full-stack telemedicine demo built with Django, Flask, SQLAlchemy and Oracle, with a Jinja2 and Bootstrap 5 front end.
 
 ## Features
 
@@ -16,16 +16,30 @@ A full-stack telemedicine demo built with Python, Flask, SQLAlchemy and SQLite, 
 
 ## Setup
 
-Requires Python 3.10 or newer.
+Requires Python 3.10-3.14. Python 3.15 is supported for the Flask/SQLite fallback, but Oracle database drivers need Python 3.14 or older.
 
 ```bash
 pip install -r requirements.txt
-python app.py
+python manage.py runserver
 ```
 
-Open http://127.0.0.1:5000 in your browser.
+Open http://127.0.0.1:8000 in your browser.
 
-The SQLite database `careconnect360.db` and its tables are created automatically on first start, together with sample doctors, patients, appointments, prescriptions and invoices.
+Without Oracle environment variables, SQLite is used for local development. The SQLite database `careconnect360.db` and its tables are created automatically on first start, together with sample doctors, patients, appointments, prescriptions and invoices.
+
+## Oracle configuration
+
+Configure Django and Flask to use the same Oracle database before starting:
+
+```powershell
+$env:ORACLE_DSN = "localhost:1521/XEPDB1"
+$env:ORACLE_USER = "careconnect"
+$env:ORACLE_PASSWORD = "your-password"
+python manage.py migrate
+python manage.py runserver
+```
+
+`ORACLE_DSN` can be a host/port/service name, a full Easy Connect string, or a TNS alias. The Oracle client libraries are optional when Python's Thin mode is used, but Oracle Instant Client may still be required by some deployments.
 
 Optional: set the `CARECONNECT_SECRET_KEY` environment variable to replace the development session key.
 

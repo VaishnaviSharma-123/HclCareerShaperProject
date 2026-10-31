@@ -6,3 +6,9 @@ careconnect360.db
 .env.*
 !.env.example
 static/uploads/
+
+# Python runtime and local database files
+*$py.class
+*.db
+*.sqlite3
+env/
